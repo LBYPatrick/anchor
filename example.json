@@ -1,0 +1,58 @@
+{
+  "plugin-dict": {
+      "v2ray-plugin": "/root/v2ray-plugin_amd64"
+  },
+
+  // 这里定义了anchor自己的执行参数
+  "execution": {
+    "rpc-port": 23345,
+    "name": "config-one",
+    "server-domain": "your.server.domain.com",
+    "download-plugin": true,
+    "backend": "shadowsocks-rust.ssserver"
+  },
+
+  // 这里定义了shadowsocks-rust的默认值，可以被group覆盖
+  "global": {
+      "fastopen": true,
+      "redirect": "google.com",
+      "plugin": "v2ray-plugin",
+      "method": "chacha20-ietf-poly1305",
+      "plugin_opts": "host=google.com"
+  },
+
+  "groups": {
+      "foo": {
+        "params": {
+          "fastopen": true,
+          "redirect": "bing.com",
+          "timeout": 1440
+        },
+        "users": {
+          "alice": {
+            "password": "this_is_a_password",
+            "ports": [
+              12345,
+              12391,
+              12313
+            ]
+          },
+          "bob": {
+            "password": "this_is_also_a_password",
+            "ports": [
+              12312,
+              12312,
+              455678
+            ]
+          }
+        }
+      },
+    "gaming": {
+      "params": {
+          "fastopen": true,
+          "method": "aes-256-gcm",
+          "tunnel_mode": "tcp_and_udp"
+      }
+    },
+  }
+}

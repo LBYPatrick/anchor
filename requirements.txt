@@ -9,3 +9,5 @@ uvicorn
 sqlalchemy
 numpy
 pandas
+nest_asyncio
+multiexit
