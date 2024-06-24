@@ -19,7 +19,7 @@ class User:
         "no_delay",
         "plugin_mode",
         "mode",
-        "ipv6_first"
+        "ipv6_first",
     ]
 
     def __init__(self, parent_config, ports: List[int], pwd: str, name: str = None):
@@ -56,6 +56,18 @@ class User:
         parents.reverse()
 
         return ".".join(parents) + f".{self.name}"
+
+    @classmethod
+    def stitch_config(cls, config: Dict[str, Any]):
+        if "plugin_opts" in config:
+
+            options : Set[str] = set([op.strip() for op in config["plugin_opts"].split(";")])
+            options.add("server")
+            config["plugin_opts"] = ";".join(options)
+
+        return config
+
+
 
     def make_config(self) -> Dict[int, Dict[str, Any]]:
         """
@@ -100,6 +112,6 @@ class User:
 
             conf = {**conf, **optionals}
 
-            ret[port] = conf
+            ret[port] = self.stitch_config(conf)
 
         return ret
